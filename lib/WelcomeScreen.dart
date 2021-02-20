@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:momusic/constants.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -17,13 +18,7 @@ class WelcomeScreen extends StatelessWidget {
 
           ),
         ),
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                end:Alignment.topLeft,
-                colors: [Color(0xff060518), Color(0xff455a64)]
-            )
-        ),
+        decoration: gradient_color
       ),
     );
   }
