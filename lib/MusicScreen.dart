@@ -1,3 +1,4 @@
+//import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:momusic/CounterText.dart';
 import 'package:momusic/constants.dart';
@@ -29,13 +30,15 @@ class _MusicScreenState extends State<MusicScreen> {
   @override
   void initState() {
    initPlayer();
+    work();
+
   }
 
 
-  void playButton(){
-
+  void playButton()async{
+audioPlayer = await audioCache.loop('song.mp3');
     if(buttonplay == true){
-      audioCache.play('song.mp3');
+
       setState(() {
         icon = Icons.pause;
         buttonplay = false;
@@ -80,6 +83,7 @@ class _MusicScreenState extends State<MusicScreen> {
              backgroundImage: AssetImage('images/moimage.png'),
 
            ),
+
            SizedBox(
              height: 20.0,
            ),
@@ -210,6 +214,16 @@ class _MusicScreenState extends State<MusicScreen> {
   }
 }
 
+work()async {
+  /*FilePickerResult result = await FilePicker.platform.pickFiles(
+    type: FileType.audio,
+  );
 
-
-//audioPlayer = await audioCache.loop('assets/song.mp3');
+  if (result != null) {
+    PlatformFile file = result.files.first;
+    print(file.name);
+  }
+  else{
+    print('nothibng found');
+  }*/
+}

@@ -3,9 +3,10 @@ import 'package:momusic/MusicScreen.dart';
 import 'package:momusic/WelcomeScreen.dart';
 
 
+
 void main() {
   runApp(MaterialApp(
-    home: MusicScreen(),
+    home: WelcomeScreen(),
     debugShowCheckedModeBanner: false,
   ));
 }
