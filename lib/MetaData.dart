@@ -1,18 +1,16 @@
+import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_media_metadata/flutter_media_metadata.dart';
 
-class MetaData{
+class MetaDataWork{
 
+  Metadata metaData;
+  var retriever = new MetadataRetriever();
 
-
-  void fetchMetaData(String path)async{
-    var retriever = new MetadataRetriever();
+  Future <void> fetchMetaData(String path)async{
     await retriever.setFile(new File(path));
-    Metadata metaData = await retriever.metadata;
-
-
+    metaData = await retriever.metadata;
   }
 
 }
