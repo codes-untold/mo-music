@@ -52,10 +52,12 @@ void work()async{
                 height: MediaQuery.of(context).size.height * 0.3,
                   width: MediaQuery.of(context).size.width * 0.7,
                   child: WelcomeLogo((){
+
                     setState(() {
                       isVisible = true;
+                      nextSlide(context);
                     });
-                    nextSlide();
+
                    // print("object");
                   }),
 
@@ -92,12 +94,12 @@ void work()async{
 
 
 
-  void nextSlide()async{
+  void nextSlide(BuildContext context)async{
   await directoryLogic.fetchData((){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreen(
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen(
       musicFiles: directoryLogic.musicFiles,
     )));
-    Navigator.pop(context);
+
   });
 
   }

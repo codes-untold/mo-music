@@ -5,22 +5,17 @@ void main(){
 }
 
 void work() {
-  int number = 72;
 
-  int first = (number/60).floor();
-  int second = number%60;
 
-    print('$first   :  $second');
 
-    if(second.toString().length == 1) {
-      print(second * 10);
-    }
-      else{
-        print(second);
-    }
+  int count = 181824;
+  int second;
+  Duration duration = Duration(milliseconds: count);
 
-  (second.toString().length == 1)?print(second * 10): print(second);
 
+
+  print(duration.inMinutes);
+  print((duration.inSeconds) - (duration.inMinutes * 60));
 
 
     }
