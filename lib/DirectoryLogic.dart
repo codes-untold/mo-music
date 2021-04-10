@@ -34,6 +34,6 @@ class DirectoryLogic{
 //final String dirpath = extDir.path.toString().substring(0,20);
 //  print(dirpath);
 
-//await audioPlayer.play("/storage/emulated/0/song.mp3",isLocal: true);
+
 
 }

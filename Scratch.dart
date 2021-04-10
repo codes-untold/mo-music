@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 void main(){
   work();
@@ -7,16 +8,6 @@ void main(){
 void work() {
 
 
-
-  int count = 181824;
-  int second;
-  Duration duration = Duration(milliseconds: count);
-
-
-
-  print(duration.inMinutes);
-  print((duration.inSeconds) - (duration.inMinutes * 60));
-
-
+print(Random().nextInt(6));
     }
 

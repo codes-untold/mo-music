@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -8,6 +7,8 @@ import 'package:momusic/DirectoryLogic.dart';
 import 'package:momusic/HomeScreen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'Arguments.dart';
 
 
 class WelcomeScreen extends StatefulWidget {
@@ -27,7 +28,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   void initState() {
-
     work();
   }
 
@@ -96,10 +96,10 @@ void work()async{
 
   void nextSlide(BuildContext context)async{
   await directoryLogic.fetchData((){
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen(
-      musicFiles: directoryLogic.musicFiles,
-    )));
+    print(directoryLogic.musicFiles);
 
+    Navigator.pushReplacementNamed(context, "/first",arguments:
+    ScreenArguments(list: directoryLogic.musicFiles));
   });
 
   }
