@@ -79,9 +79,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context,snapshot){
                     if(snapshot.connectionState == ConnectionState.done){
 
-                      return MusicList(metaFiles: metaFiles,
+
+                      return musicFiles.isNotEmpty? MusicList(metaFiles: metaFiles,
                         musicFiles: musicFiles,
                         audioPlayer: audioPlayer,
+
+                      ):  Container(
+                        height: MediaQuery.of(context).size.height* 0.5,
+                        width: MediaQuery.of(context).size.width *0.8,
+                        child: Center(
+                          child: Text(""
+                              "No Music File Found!"
+                          ,style: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.white
+                            ),)
+                        ),
                       );
                     }
                     else
