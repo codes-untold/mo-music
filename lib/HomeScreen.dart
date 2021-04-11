@@ -1,7 +1,10 @@
 
+import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Metadata metaData;
   static List <String> musicFiles = [];
   var retriever = new MetadataRetriever();
-
+  AudioPlayer audioPlayer = AudioPlayer();
   MetaDataWork metaDataWork = MetaDataWork();
+  int count =0;
 
 
   @override
@@ -40,14 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return WillPopScope(
       onWillPop: ()async{
-        if(Provider.of<Data>(context).playing){
-          MoveToBackground.moveTaskToBack();
-        }
+        MoveToBackground.moveTaskToBack();
         return false;
       },
       child: Scaffold(
         body: SafeArea(
           child: Container(
+
             decoration: gradient_color,
             child: Column(
               children: [
@@ -78,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       return MusicList(metaFiles: metaFiles,
                         musicFiles: musicFiles,
+                        audioPlayer: audioPlayer,
                       );
                     }
                     else
@@ -113,18 +117,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 Future <List> chee()async{
-String tin;
-final ScreenArguments args = ModalRoute.of(context).settings.arguments;
-musicFiles.addAll(args.list);
-print(ModalRoute.of(context).settings.name);
-    for(tin in musicFiles){
-      await metaDataWork.fetchMetaData(tin);
-      metaFiles.add(metaDataWork.metaData);
 
+    if(count == 0){
+      String tin;
+      final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+      musicFiles.addAll(args.list);
+      print(ModalRoute.of(context).settings.name);
+      for(tin in musicFiles){
+        await metaDataWork.fetchMetaData(tin);
+        metaFiles.add(metaDataWork.metaData);
+        count++;
+
+      }
+      return metaFiles;
+    }
+
+
+    else{
 
     }
 
-return metaFiles;
 }
 }
 
@@ -132,11 +144,13 @@ class MusicList extends StatefulWidget  {
    MusicList({
     @required this.metaFiles,
     @required this.musicFiles,
+    this.audioPlayer
   }) ;
 
   final List<Metadata> metaFiles;
   final List<String> musicFiles;
   static final Method method = Method();
+  AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   _MusicListState createState() => _MusicListState();
@@ -144,7 +158,7 @@ class MusicList extends StatefulWidget  {
 
 class _MusicListState extends State<MusicList> {
 
-  AudioPlayer audioPlayer = AudioPlayer();
+  //AudioPlayer audioPlayer = AudioPlayer();
   IconData icon;
   int value;
   bool loaded = false;
@@ -175,8 +189,9 @@ class _MusicListState extends State<MusicList> {
                   child: GestureDetector(
                     onTap: ()async{
                       loaded = true;
-                      audioPlayer.pause();
-                      audioPlayer.play(widget.musicFiles[i], isLocal: true);
+
+                      widget.audioPlayer.pause();
+                      widget.audioPlayer.play(widget.musicFiles[i], isLocal: true);
 
 
                    Provider.of<Data>(context).selected = i;
@@ -189,7 +204,7 @@ class _MusicListState extends State<MusicList> {
                       }
 
                     final result =  await Navigator.pushNamed(context, "/second",arguments:
-                     SecondArguments(metaFiles: widget.metaFiles,musicFiles: widget.musicFiles,currentFile: i,audioPlayer: audioPlayer));
+                     SecondArguments(metaFiles: widget.metaFiles,musicFiles: widget.musicFiles,currentFile: i,audioPlayer: widget.audioPlayer));
 
 
                       setState(() {
@@ -225,7 +240,7 @@ class _MusicListState extends State<MusicList> {
                 onTap: ()async{
                   final result =  await Navigator.pushNamed(context, "/second",arguments:
                   SecondArguments(metaFiles: widget.metaFiles,musicFiles: widget.musicFiles,currentFile:
-                  Provider.of<Data>(context).selected  == null ? value:Provider.of<Data>(context).selected ,audioPlayer: audioPlayer));
+                  Provider.of<Data>(context).selected  == null ? value:Provider.of<Data>(context).selected ,audioPlayer: widget.audioPlayer));
                   if(result == false){
                     setState(() {
                     });
@@ -289,13 +304,13 @@ class _MusicListState extends State<MusicList> {
 
                                 if(loaded == false){
                                   if( Provider.of<Data>(context).playing == false){
-                                    audioPlayer.play(widget.musicFiles[value], isLocal: true);
+                                    widget.audioPlayer.play(widget.musicFiles[value], isLocal: true);
                                   loadedstate = true;
                                   print('1st');
                                     Provider.of<Data>(context).changeState();
                                   }
                                   else{
-                                    audioPlayer.pause();
+                                    widget.audioPlayer.pause();
                                     loadedstate = false;
                                     print('2nd');
                                     Provider.of<Data>(context).changeState();
@@ -307,12 +322,12 @@ class _MusicListState extends State<MusicList> {
 
                                     Provider.of<Data>(context).changeState();
                                     icon = Icons.play_arrow;
-                                    audioPlayer.pause();
+                                    widget.audioPlayer.pause();
                                   }
                                   else{
                                     Provider.of<Data>(context).changeState();
                                     icon = Icons.pause;
-                                    audioPlayer.play(widget.musicFiles[ Provider.of<Data>(context).selected], isLocal: true);
+                                    widget.audioPlayer.play(widget.musicFiles[ Provider.of<Data>(context).selected], isLocal: true);
                                   }
                                 }
 

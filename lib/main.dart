@@ -5,12 +5,12 @@ import 'package:momusic/Data.dart';
 import 'package:momusic/HomeScreen.dart';
 import 'package:momusic/MusicScreen.dart';
 import 'package:momusic/WelcomeScreen.dart';
-import 'package:momusic/rough.dart';
 import 'package:provider/provider.dart';
 
 
 
 void main() {
+
   runApp(ChangeNotifierProvider<Data>(
     create: (context)=> Data(),
     child: MaterialApp(
@@ -20,7 +20,6 @@ void main() {
         '/':(context) => WelcomeScreen(),
         '/first':(context) => HomeScreen(),
         '/second':(context) => MusicScreen(),
-        '/third':(context) => Rough(),
       },
       debugShowCheckedModeBanner: false,
     ),

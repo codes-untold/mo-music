@@ -23,20 +23,6 @@ DirectoryLogic directoryLogic = DirectoryLogic();
 class _WelcomeScreenState extends State<WelcomeScreen> {
 
   bool isVisible = false;
-  AudioPlayer audioPlayer = AudioPlayer();
-  AudioCache audioCache = AudioCache();
-
-  @override
-  void initState() {
-    work();
-  }
-
-void work()async{
-
-  await Permission.storage.request();
-
-}
-
 
   Widget build(BuildContext context) {
 
@@ -96,11 +82,11 @@ void work()async{
 
   void nextSlide(BuildContext context)async{
   await directoryLogic.fetchData((){
-    print(directoryLogic.musicFiles);
+    print(directoryLogic.musicFiles,);
 
     Navigator.pushReplacementNamed(context, "/first",arguments:
     ScreenArguments(list: directoryLogic.musicFiles));
-  });
+  },context);
 
   }
 
