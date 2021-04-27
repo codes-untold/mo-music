@@ -89,11 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: MediaQuery.of(context).size.width *0.8,
                         child: Center(
                           child: Text(""
-                              "No Music File Found!"
+                              "Couldn't fetch music files (Android version < 11)"
                           ,style: TextStyle(
-                              fontSize: 15.0,
+                              fontSize: 17.0,
                               color: Colors.white
-                            ),)
+                            ),
+                          textAlign: TextAlign.center,)
                         ),
                       );
                     }
