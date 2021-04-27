@@ -44,8 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return WillPopScope(
       onWillPop: ()async{
-        MoveToBackground.moveTaskToBack();
-        return false;
+        if(Provider.of<Data>(context).playing){
+          MoveToBackground.moveTaskToBack();
+          return false;
+        }else{
+          return true;
+        }
+
       },
       child: Scaffold(
         body: SafeArea(
